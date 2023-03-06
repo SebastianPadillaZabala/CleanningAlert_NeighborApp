@@ -1,8 +1,13 @@
+import 'package:cleanning_alert_neighbor/authentication/login_screen.dart';
+import 'package:cleanning_alert_neighbor/authentication/signup_screen.dart';
 import 'package:cleanning_alert_neighbor/mainScreens/main_screens.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
+
   runApp(
     MyApp(
       child: MaterialApp(
@@ -10,7 +15,7 @@ void main() async {
         theme: ThemeData(
           primarySwatch: Colors.blue,
         ),
-        home: MainScreen(),
+        home: LoginScreen(),
         debugShowCheckedModeBanner: false,
       ),
     ),

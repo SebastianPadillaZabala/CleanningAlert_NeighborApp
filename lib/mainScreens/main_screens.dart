@@ -1,4 +1,6 @@
+import 'package:cleanning_alert_neighbor/tabPages/alerts_tab.dart';
 import 'package:cleanning_alert_neighbor/tabPages/home_tab.dart';
+import 'package:cleanning_alert_neighbor/tabPages/profile_tab.dart';
 import 'package:flutter/material.dart';
 
 class MainScreen extends StatefulWidget {
@@ -32,7 +34,7 @@ class _MainScreenState extends State<MainScreen>
       body: TabBarView(
         physics: const NeverScrollableScrollPhysics(),
         controller: tabController,
-        children: [HomeTabPage(), HomeTabPage(), HomeTabPage()],
+        children: [HomeTabPage(), AlertTabPage(), ProfileTabPage()],
       ),
       bottomNavigationBar: BottomNavigationBar(
         items: const [
