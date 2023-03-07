@@ -36,6 +36,7 @@ dependencies:
   flutter:
     sdk: flutter
   google_maps_flutter: ^2.2.5
+  flutter_svg: ^0.17.4
 
 dev_dependencies:
   flutter_lints: ^2.0.0
