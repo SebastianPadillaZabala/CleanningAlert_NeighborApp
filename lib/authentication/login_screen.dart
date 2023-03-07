@@ -1,4 +1,5 @@
 import 'package:cleanning_alert_neighbor/mainScreens/main_screens.dart';
+import 'package:cleanning_alert_neighbor/mainScreens/welcome_screen.dart';
 import 'package:flutter/material.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -7,103 +8,120 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-  TextEditingController emailTextEditingController = TextEditingController();
-  TextEditingController passwordTextEditingController = TextEditingController();
+  TextEditingController email = TextEditingController();
+  TextEditingController password = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.black,
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.all(20.0),
-          child: Column(
-            children: [
-              const SizedBox(
-                height: 30,
+        appBar: AppBar(
+          title: Text(""),
+          backgroundColor: Color.fromARGB(255, 5, 125, 113),
+          elevation: 0,
+          leading: IconButton(
+              icon: Icon(
+                Icons.arrow_back_ios_sharp,
+                color: Colors.white,
               ),
-              /////////
-              Padding(
-                padding: const EdgeInsets.all(20.0),
-                child: Image.asset('images/basurero.png'),
-              ),
-              ////////
-              const SizedBox(
-                height: 10,
-              ),
-              ////////
-              const Text(
-                'Inicio de Sesion',
-                style: TextStyle(
-                    fontSize: 26,
-                    color: Colors.grey,
-                    fontWeight: FontWeight.bold),
-              ),
-              ///////////
-              TextField(
-                controller: emailTextEditingController,
-                keyboardType: TextInputType.emailAddress,
-                style: const TextStyle(color: Colors.white),
-                decoration: const InputDecoration(
-                  labelText: 'Correo electronico',
-                  hintText: 'Correo electronico',
-                  enabledBorder: UnderlineInputBorder(
-                    borderSide: BorderSide(color: Colors.grey),
-                  ),
-                  focusedBorder: UnderlineInputBorder(
-                    borderSide: BorderSide(color: Colors.grey),
-                  ),
-                  labelStyle: TextStyle(
-                    color: Colors.grey,
-                    fontSize: 14,
-                  ),
-                ),
-              ),
-              /////////////
-              TextField(
-                controller: passwordTextEditingController,
-                keyboardType: TextInputType.text,
-                obscureText: true,
-                style: const TextStyle(color: Colors.white),
-                decoration: const InputDecoration(
-                  labelText: 'Contraseña',
-                  hintText: 'Contraseña',
-                  enabledBorder: UnderlineInputBorder(
-                    borderSide: BorderSide(color: Colors.grey),
-                  ),
-                  focusedBorder: UnderlineInputBorder(
-                    borderSide: BorderSide(color: Colors.grey),
-                  ),
-                  labelStyle: TextStyle(
-                    color: Colors.grey,
-                    fontSize: 14,
-                  ),
-                ),
-              ),
-              /////////////
-              const SizedBox(
-                height: 20,
-              ),
-              /////////////
-              ElevatedButton(
-                onPressed: () {
-                  Navigator.push(
-                      context, MaterialPageRoute(builder: (c) => MainScreen()));
-                },
-                style: ElevatedButton.styleFrom(
-                    primary: Color.fromARGB(255, 81, 200, 127)),
-                child: const Text(
-                  'Iniciar',
-                  style: TextStyle(
-                    color: Colors.black54,
-                    fontSize: 18,
-                  ),
-                ),
-              ),
-            ],
-          ),
+              onPressed: () {
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (_) => WelcomeScreen()));
+              }),
         ),
-      ),
-    );
+        body: Container(
+            decoration: BoxDecoration(
+              gradient: LinearGradient(
+                begin: Alignment.topLeft,
+                end: Alignment.bottomLeft,
+                colors: [
+                  Color.fromARGB(255, 5, 125, 113),
+                  Color.fromARGB(255, 5, 125, 113),
+                  Colors.black,
+                ],
+              ),
+            ),
+            child: Container(
+              decoration: BoxDecoration(
+                  color: Colors.white, borderRadius: BorderRadius.circular(20)),
+              margin:
+                  EdgeInsets.only(top: 150, left: 60, right: 60, bottom: 60),
+              padding: EdgeInsets.only(left: 20, right: 20),
+              child: Center(
+                child: SingleChildScrollView(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        " Bienvenido a Cleaning Alert",
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 22.0,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      SizedBox(
+                        height: 30,
+                      ),
+                      TextField(
+                        controller: email,
+                        decoration: InputDecoration(
+                          hintText: "username@correo.com",
+                        ),
+                      ),
+                      SizedBox(
+                        height: 20,
+                      ),
+                      TextField(
+                        controller: password,
+                        obscureText: true,
+                        decoration: InputDecoration(
+                          hintText: "password",
+                        ),
+                      ),
+                      SizedBox(
+                        height: 40,
+                      ),
+                      Container(
+                        margin: EdgeInsets.only(top: 10),
+                        width: 500,
+                        decoration: BoxDecoration(
+                          color: Color.fromARGB(255, 37, 210, 126),
+                          borderRadius: BorderRadius.circular(100),
+                        ),
+                        child: ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(30)),
+                              primary: Color.fromARGB(255, 37, 210, 126),
+                              padding: EdgeInsets.symmetric(
+                                  horizontal: 40, vertical: 10),
+                              textStyle: TextStyle(
+                                  fontSize: 20, fontWeight: FontWeight.bold)),
+                          child: Text("Log In",
+                              style:
+                                  TextStyle(color: Colors.white, fontSize: 20)),
+                          onPressed: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (_) => MainScreen()));
+                          },
+                        ),
+                      ),
+                      SizedBox(height: 30),
+                      TextButton(
+                          onPressed: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (_) => MainScreen()));
+                          },
+                          child: Text("Olvidaste tu contraseña?"))
+                    ],
+                  ),
+                ),
+              ),
+            )));
   }
 }

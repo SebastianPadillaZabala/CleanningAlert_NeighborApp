@@ -1,4 +1,5 @@
-import 'package:cleanning_alert_neighbor/tabPages/alerts_tab.dart';
+import 'package:cleanning_alert_neighbor/authentication/login_screen.dart';
+import 'package:cleanning_alert_neighbor/tabPages/ubicacion_tab.dart';
 import 'package:cleanning_alert_neighbor/tabPages/home_tab.dart';
 import 'package:cleanning_alert_neighbor/tabPages/profile_tab.dart';
 import 'package:flutter/material.dart';
@@ -12,11 +13,15 @@ class _MainScreenState extends State<MainScreen>
     with SingleTickerProviderStateMixin {
   TabController? tabController;
   int selectedIndex = 0;
+  bool flag = true;
 
   onItemClicked(int index) {
     setState(() {
       selectedIndex = index;
       tabController!.index = selectedIndex;
+      if (index == 1) {
+        flag = false;
+      }
     });
   }
 
@@ -31,10 +36,39 @@ class _MainScreenState extends State<MainScreen>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: Text(""),
+        backgroundColor: Color.fromARGB(255, 5, 125, 113),
+        elevation: 0,
+        leading: IconButton(
+            icon: Icon(
+              Icons.arrow_back_ios_sharp,
+              color: Colors.white,
+            ),
+            onPressed: () {
+              if (flag == true) {
+                Navigator.push(
+                    context, MaterialPageRoute(builder: (_) => LoginScreen()));
+              } else {
+                Navigator.push(
+                    context, MaterialPageRoute(builder: (_) => MainScreen()));
+                flag = true;
+              }
+            }),
+        actions: <Widget>[
+          IconButton(
+            icon: Icon(
+              Icons.add_alert,
+              color: Colors.white,
+            ),
+            onPressed: () {},
+          )
+        ],
+      ),
       body: TabBarView(
         physics: const NeverScrollableScrollPhysics(),
         controller: tabController,
-        children: [HomeTabPage(), AlertTabPage(), ProfileTabPage()],
+        children: [HomeTabPage(), UbicacionTabPage(), ProfileTabPage()],
       ),
       bottomNavigationBar: BottomNavigationBar(
         items: const [
@@ -43,8 +77,12 @@ class _MainScreenState extends State<MainScreen>
             label: 'Home',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.alarm_outlined),
-            label: 'Alert',
+            icon: Icon(Icons.location_pin),
+            label: 'ubicación',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.person_add_alt_sharp),
+            label: 'Profiles',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.person),

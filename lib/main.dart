@@ -3,6 +3,8 @@ import 'package:cleanning_alert_neighbor/authentication/signup_screen.dart';
 import 'package:cleanning_alert_neighbor/mainScreens/main_screens.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:cleanning_alert_neighbor/mainScreens/welcome_screen.dart';
+import 'package:cleanning_alert_neighbor/constants.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -13,9 +15,12 @@ void main() async {
       child: MaterialApp(
         title: 'Neighbor App',
         theme: ThemeData(
-          primarySwatch: Colors.blue,
+          primaryColor: kPrimaryColor,
+          scaffoldBackgroundColor: Colors.white,
         ),
-        home: LoginScreen(),
+
+        home: WelcomeScreen(),
+        //     home: LoginScreen(),
         debugShowCheckedModeBanner: false,
       ),
     ),
