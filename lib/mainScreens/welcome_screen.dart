@@ -7,7 +7,7 @@ class WelcomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
           gradient: LinearGradient(
             begin: Alignment.topLeft,
             end: Alignment.bottomLeft,
@@ -38,11 +38,11 @@ class WelcomeScreen extends StatelessWidget {
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(30)),
                       primary: Color.fromARGB(255, 37, 210, 126),
-                      padding:
-                          EdgeInsets.symmetric(horizontal: 50, vertical: 10),
-                      textStyle:
-                          TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
-                  child: Text("Ingresar",
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 50, vertical: 10),
+                      textStyle: const TextStyle(
+                          fontSize: 20, fontWeight: FontWeight.bold)),
+                  child: const Text("Ingresar",
                       style: TextStyle(color: Colors.white, fontSize: 20)),
                   onPressed: () {
                     Navigator.push(context,
@@ -50,8 +50,8 @@ class WelcomeScreen extends StatelessWidget {
                   },
                 ),
               ),
-              SizedBox(height: 40),
-              Text(
+              const SizedBox(height: 40),
+              const Text(
                 "Aun no tienes cuenta?",
                 style: TextStyle(
                   color: Colors.white,
@@ -63,7 +63,7 @@ class WelcomeScreen extends StatelessWidget {
                   Navigator.push(context,
                       MaterialPageRoute(builder: (_) => SignupScreen()));
                 },
-                child: Text(
+                child: const Text(
                   "Registrate",
                   style: TextStyle(
                     color: Color.fromARGB(255, 86, 235, 91),

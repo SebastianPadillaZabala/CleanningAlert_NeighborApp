@@ -30,7 +30,7 @@ class _MainScreenState extends State<MainScreen>
     // TODO: implement initState
     super.initState();
 
-    tabController = TabController(length: 3, vsync: this);
+    tabController = TabController(length: 4, vsync: this);
   }
 
   @override
@@ -65,6 +65,8 @@ class _MainScreenState extends State<MainScreen>
           )
         ],
       ),
+
+      /*
       body: TabBarView(
         physics: const NeverScrollableScrollPhysics(),
         controller: tabController,
@@ -82,16 +84,55 @@ class _MainScreenState extends State<MainScreen>
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.person_add_alt_sharp),
-            label: 'Profiles',
+            label: 'Alert',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.person),
+            icon: Icon(Icons.person_add_alt_sharp),
             label: 'Profile',
           ),
         ],
         unselectedItemColor: Colors.white54,
         selectedItemColor: Color.fromARGB(255, 81, 200, 127),
         backgroundColor: Colors.black,
+        type: BottomNavigationBarType.fixed,
+        selectedLabelStyle: TextStyle(fontSize: 14),
+        showUnselectedLabels: true,
+        currentIndex: selectedIndex,
+        onTap: onItemClicked,
+      ),
+    );*/
+      body: TabBarView(
+        physics: const NeverScrollableScrollPhysics(),
+        controller: tabController,
+        children: [
+          HomeTabPage(),
+          UbicacionTabPage(),
+          ProfileTabPage(),
+          ProfileTabPage()
+        ],
+      ),
+      bottomNavigationBar: BottomNavigationBar(
+        items: const [
+          BottomNavigationBarItem(
+            icon: Icon(Icons.location_on),
+            label: 'Home',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.map),
+            label: 'Rutas',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.alarm_outlined),
+            label: 'Alert',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.person),
+            label: 'Profile',
+          ),
+        ],
+        unselectedItemColor: Colors.grey,
+        selectedItemColor: Color.fromARGB(255, 81, 200, 127),
+        backgroundColor: Colors.white,
         type: BottomNavigationBarType.fixed,
         selectedLabelStyle: TextStyle(fontSize: 14),
         showUnselectedLabels: true,

@@ -1,6 +1,12 @@
+import 'package:cleanning_alert_neighbor/authentication/login_screen.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
+import '../global/global.dart';
 import '../mainScreens/welcome_screen.dart';
+import '../splashScreen/splash_screen.dart';
 
 class SignupScreen extends StatefulWidget {
   @override
@@ -13,15 +19,48 @@ class _SignupScreenState extends State<SignupScreen> {
   TextEditingController phoneTextEditingController = TextEditingController();
   TextEditingController passwordTextEditingController = TextEditingController();
 
+  saveUserInfoNow() async {
+    final User? firebaseUser = (await fAuth
+            .createUserWithEmailAndPassword(
+      email: emailTextEditingController.text.trim(),
+      password: passwordTextEditingController.text.trim(),
+    )
+            .catchError((msg) {
+      Navigator.pop(context);
+      Fluttertoast.showToast(msg: "Error: " + msg.toString());
+    }))
+        .user;
+    if (firebaseUser != null) {
+      Map userMap = {
+        'id': firebaseUser.uid,
+        'name': nameTextEditingController.text.trim(),
+        'email': emailTextEditingController.text.trim(),
+        'phone': phoneTextEditingController.text.trim(),
+      };
+      //crear tabla drivers
+      DatabaseReference driversRef =
+          FirebaseDatabase.instance.ref().child('users');
+      //insertar el mapa de datos a dicha tabla referenciada
+      driversRef.child(firebaseUser.uid).set(userMap);
+
+      currentFirebaseUser = firebaseUser;
+      Fluttertoast.showToast(msg: 'La cuenta fue creada');
+      Navigator.push(
+          context, MaterialPageRoute(builder: (c) => MySplashScreen()));
+    } else {
+      Navigator.pop(context);
+      Fluttertoast.showToast(msg: 'La cuenta no fue creada');
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: Text(""),
           backgroundColor: Color.fromARGB(255, 5, 125, 113),
           elevation: 0,
           leading: IconButton(
-              icon: Icon(
+              icon: const Icon(
                 Icons.arrow_back_ios_sharp,
                 color: Colors.white,
               ),
@@ -30,9 +69,8 @@ class _SignupScreenState extends State<SignupScreen> {
                     MaterialPageRoute(builder: (_) => WelcomeScreen()));
               }),
         ),
-        backgroundColor: Colors.black,
         body: Container(
-            decoration: BoxDecoration(
+            decoration: const BoxDecoration(
               gradient: LinearGradient(
                 begin: Alignment.topLeft,
                 end: Alignment.bottomLeft,
@@ -44,154 +82,102 @@ class _SignupScreenState extends State<SignupScreen> {
               ),
             ),
             child: Container(
-                decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(20)),
-                margin:
-                    EdgeInsets.only(top: 60, left: 60, right: 60, bottom: 60),
-                padding: EdgeInsets.only(left: 20, right: 20),
-                child: Center(
-                  child: SingleChildScrollView(
-                    child: Padding(
-                      padding: const EdgeInsets.all(10.0),
-                      child: Column(
-                        children: [
-                          ////////
-                          CircleAvatar(
-                            radius: 70,
-                            backgroundColor: Colors.grey[400]?.withOpacity(
-                              0.5,
-                            ),
-                          ),
-                          //////////
-
-                          //////////
-                          const Text(
-                            'Registrate Vecino',
-                            style: TextStyle(
-                                fontSize: 26,
-                                color: Colors.white,
-                                fontWeight: FontWeight.bold),
-                          ),
-                          ///////////
-                          TextField(
-                            controller: nameTextEditingController,
-                            style: const TextStyle(color: Colors.white),
-                            decoration: const InputDecoration(
-                              labelText: 'Nombre',
-                              hintText: 'Nombre',
-                              enabledBorder: UnderlineInputBorder(
-                                borderSide: BorderSide(color: Colors.grey),
-                              ),
-                              focusedBorder: UnderlineInputBorder(
-                                borderSide: BorderSide(color: Colors.grey),
-                              ),
-                              labelStyle: TextStyle(
-                                color: Colors.grey,
-                                fontSize: 14,
-                              ),
-                            ),
-                          ),
-                          const SizedBox(
-                            height: 10,
-                          ),
-                          TextField(
-                            controller: emailTextEditingController,
-                            keyboardType: TextInputType.emailAddress,
-                            style: const TextStyle(color: Colors.white),
-                            decoration: const InputDecoration(
-                              labelText: 'Correo electronico',
-                              hintText: 'Correo electronico',
-                              enabledBorder: UnderlineInputBorder(
-                                borderSide: BorderSide(color: Colors.grey),
-                              ),
-                              focusedBorder: UnderlineInputBorder(
-                                borderSide: BorderSide(color: Colors.grey),
-                              ),
-                              labelStyle: TextStyle(
-                                color: Colors.grey,
-                                fontSize: 14,
-                              ),
-                            ),
-                          ),
-
-                          const SizedBox(
-                            height: 10,
-                          ),
-                          /////////////
-                          TextField(
-                            controller: phoneTextEditingController,
-                            keyboardType: TextInputType.phone,
-                            style: const TextStyle(color: Colors.white),
-                            decoration: const InputDecoration(
-                              labelText: 'Celular',
-                              hintText: 'Celular',
-                              enabledBorder: UnderlineInputBorder(
-                                borderSide: BorderSide(color: Colors.grey),
-                              ),
-                              focusedBorder: UnderlineInputBorder(
-                                borderSide: BorderSide(color: Colors.grey),
-                              ),
-                              labelStyle: TextStyle(
-                                color: Colors.grey,
-                                fontSize: 14,
-                              ),
-                            ),
-                          ),
-                          const SizedBox(
-                            height: 10,
-                          ),
-                          /////////////
-                          TextField(
-                            controller: passwordTextEditingController,
-                            keyboardType: TextInputType.text,
-                            obscureText: true,
-                            style: const TextStyle(color: Colors.white),
-                            decoration: const InputDecoration(
-                              labelText: 'Contraseña',
-                              hintText: 'Contraseña',
-                              enabledBorder: UnderlineInputBorder(
-                                borderSide: BorderSide(color: Colors.grey),
-                              ),
-                              focusedBorder: UnderlineInputBorder(
-                                borderSide: BorderSide(color: Colors.grey),
-                              ),
-                              labelStyle: TextStyle(
-                                color: Colors.grey,
-                                fontSize: 14,
-                              ),
-                            ),
-                          ),
-                          const SizedBox(
-                            height: 10,
-                          ),
-                          /////////////
-                          const SizedBox(
-                            height: 30,
-                          ),
-                          /////////////
-                          ElevatedButton(
-                            onPressed: () {},
-                            style: ElevatedButton.styleFrom(
-                                shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(30)),
-                                primary: Color.fromARGB(255, 37, 210, 126),
-                                padding: EdgeInsets.symmetric(
-                                    horizontal: 40, vertical: 10),
-                                textStyle: TextStyle(
-                                    fontSize: 20, fontWeight: FontWeight.bold)),
-                            child: const Text(
-                              'Crear Cuenta',
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 20,
-                              ),
-                            ),
-                          ),
-                        ],
+              decoration: BoxDecoration(
+                  color: Colors.white, borderRadius: BorderRadius.circular(20)),
+              margin: const EdgeInsets.only(
+                  top: 50, left: 60, right: 60, bottom: 60),
+              padding: const EdgeInsets.only(left: 20, right: 20),
+              child: Center(
+                child: SingleChildScrollView(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      const Text(
+                        "Registrate",
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 22.0,
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
-                    ),
+                      const SizedBox(
+                        height: 20,
+                      ),
+                      TextField(
+                        controller: nameTextEditingController,
+                        decoration: const InputDecoration(
+                          hintText: "name",
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      TextField(
+                        controller: emailTextEditingController,
+                        decoration: const InputDecoration(
+                          hintText: "username@correo.com",
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      TextField(
+                        controller: phoneTextEditingController,
+                        decoration: const InputDecoration(
+                          hintText: "#########",
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      TextField(
+                        controller: passwordTextEditingController,
+                        obscureText: true,
+                        decoration: const InputDecoration(
+                          hintText: "password",
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 40,
+                      ),
+                      Container(
+                        margin: const EdgeInsets.only(top: 10),
+                        width: 500,
+                        decoration: BoxDecoration(
+                          color: const Color.fromARGB(255, 37, 210, 126),
+                          borderRadius: BorderRadius.circular(100),
+                        ),
+                        child: ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(30)),
+                              primary: const Color.fromARGB(255, 37, 210, 126),
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: 40, vertical: 10),
+                              textStyle: const TextStyle(
+                                  fontSize: 20, fontWeight: FontWeight.bold)),
+                          child: const Text("Register",
+                              style:
+                                  TextStyle(color: Colors.white, fontSize: 20)),
+                          onPressed: () {
+                            saveUserInfoNow();
+                          },
+                        ),
+                      ),
+                      const SizedBox(height: 30),
+                      TextButton(
+                          onPressed: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (_) => LoginScreen()));
+                          },
+                          child: const Text("Ya tengo una cuenta"))
+                    ],
                   ),
-                ))));
+                ),
+              ),
+            )));
   }
 }

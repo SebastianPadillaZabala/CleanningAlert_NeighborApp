@@ -1,6 +1,11 @@
+import 'package:cleanning_alert_neighbor/authentication/signup_screen.dart';
+import 'package:cleanning_alert_neighbor/global/global.dart';
 import 'package:cleanning_alert_neighbor/mainScreens/main_screens.dart';
 import 'package:cleanning_alert_neighbor/mainScreens/welcome_screen.dart';
+import 'package:cleanning_alert_neighbor/splashScreen/splash_screen.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 class LoginScreen extends StatefulWidget {
   @override
@@ -8,18 +13,39 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-  TextEditingController email = TextEditingController();
-  TextEditingController password = TextEditingController();
+  TextEditingController emailTextEditingController = TextEditingController();
+  TextEditingController passwordTextEditingController = TextEditingController();
+
+  loginUserNow() async {
+    final User? firebaseUser = (await fAuth
+            .signInWithEmailAndPassword(
+      email: emailTextEditingController.text.trim(),
+      password: passwordTextEditingController.text.trim(),
+    )
+            .catchError((msg) {
+      Navigator.pop(context);
+      Fluttertoast.showToast(msg: "Error: " + msg.toString());
+    }))
+        .user;
+    if (firebaseUser != null) {
+      currentFirebaseUser = firebaseUser;
+      Fluttertoast.showToast(msg: 'Login correcto');
+      Navigator.push(
+          context, MaterialPageRoute(builder: (c) => MySplashScreen()));
+    } else {
+      Navigator.pop(context);
+      Fluttertoast.showToast(msg: 'Error durante el login');
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: Text(""),
           backgroundColor: Color.fromARGB(255, 5, 125, 113),
           elevation: 0,
           leading: IconButton(
-              icon: Icon(
+              icon: const Icon(
                 Icons.arrow_back_ios_sharp,
                 color: Colors.white,
               ),
@@ -29,7 +55,7 @@ class _LoginScreenState extends State<LoginScreen> {
               }),
         ),
         body: Container(
-            decoration: BoxDecoration(
+            decoration: const BoxDecoration(
               gradient: LinearGradient(
                 begin: Alignment.topLeft,
                 end: Alignment.bottomLeft,
@@ -43,16 +69,16 @@ class _LoginScreenState extends State<LoginScreen> {
             child: Container(
               decoration: BoxDecoration(
                   color: Colors.white, borderRadius: BorderRadius.circular(20)),
-              margin:
-                  EdgeInsets.only(top: 150, left: 60, right: 60, bottom: 60),
-              padding: EdgeInsets.only(left: 20, right: 20),
+              margin: const EdgeInsets.only(
+                  top: 100, left: 60, right: 60, bottom: 80),
+              padding: const EdgeInsets.only(left: 20, right: 20),
               child: Center(
                 child: SingleChildScrollView(
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Text(
-                        " Bienvenido a Cleaning Alert",
+                      const Text(
+                        "Bienvenido a Cleaning Alert",
                         textAlign: TextAlign.center,
                         style: TextStyle(
                           color: Colors.black,
@@ -60,30 +86,32 @@ class _LoginScreenState extends State<LoginScreen> {
                           fontWeight: FontWeight.bold,
                         ),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 30,
                       ),
                       TextField(
-                        controller: email,
-                        decoration: InputDecoration(
+                        controller: emailTextEditingController,
+                        keyboardType: TextInputType.emailAddress,
+                        decoration: const InputDecoration(
                           hintText: "username@correo.com",
                         ),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 20,
                       ),
                       TextField(
-                        controller: password,
+                        controller: passwordTextEditingController,
+                        keyboardType: TextInputType.text,
                         obscureText: true,
-                        decoration: InputDecoration(
+                        decoration: const InputDecoration(
                           hintText: "password",
                         ),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 40,
                       ),
                       Container(
-                        margin: EdgeInsets.only(top: 10),
+                        margin: const EdgeInsets.only(top: 10),
                         width: 500,
                         decoration: BoxDecoration(
                           color: Color.fromARGB(255, 37, 210, 126),
@@ -94,30 +122,27 @@ class _LoginScreenState extends State<LoginScreen> {
                               shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(30)),
                               primary: Color.fromARGB(255, 37, 210, 126),
-                              padding: EdgeInsets.symmetric(
+                              padding: const EdgeInsets.symmetric(
                                   horizontal: 40, vertical: 10),
-                              textStyle: TextStyle(
+                              textStyle: const TextStyle(
                                   fontSize: 20, fontWeight: FontWeight.bold)),
-                          child: Text("Log In",
+                          child: const Text("Log In",
                               style:
                                   TextStyle(color: Colors.white, fontSize: 20)),
                           onPressed: () {
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (_) => MainScreen()));
+                            loginUserNow();
                           },
                         ),
                       ),
-                      SizedBox(height: 30),
+                      const SizedBox(height: 30),
                       TextButton(
                           onPressed: () {
                             Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (_) => MainScreen()));
+                                    builder: (_) => SignupScreen()));
                           },
-                          child: Text("Olvidaste tu contraseña?"))
+                          child: const Text("Crear una cuenta"))
                     ],
                   ),
                 ),
