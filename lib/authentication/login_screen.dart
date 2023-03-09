@@ -4,6 +4,7 @@ import 'package:cleanning_alert_neighbor/mainScreens/main_screens.dart';
 import 'package:cleanning_alert_neighbor/mainScreens/welcome_screen.dart';
 import 'package:cleanning_alert_neighbor/splashScreen/splash_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
@@ -28,13 +29,25 @@ class _LoginScreenState extends State<LoginScreen> {
     }))
         .user;
     if (firebaseUser != null) {
-      currentFirebaseUser = firebaseUser;
-      Fluttertoast.showToast(msg: 'Login correcto');
-      Navigator.push(
-          context, MaterialPageRoute(builder: (c) => MySplashScreen()));
+      DatabaseReference driversRef =
+          FirebaseDatabase.instance.ref().child('users');
+      driversRef.child(firebaseUser.uid).once().then((driverKey) {
+        final snap = driverKey.snapshot;
+        if (snap.value != null) {
+          currentFirebaseUser = firebaseUser;
+          Fluttertoast.showToast(msg: "login Succesful");
+          Navigator.push(context,
+              MaterialPageRoute(builder: (c) => const MySplashScreen()));
+        } else {
+          Fluttertoast.showToast(msg: "No record exist whit this email");
+          fAuth.signOut();
+          Navigator.push(context,
+              MaterialPageRoute(builder: (c) => const MySplashScreen()));
+        }
+      });
     } else {
       Navigator.pop(context);
-      Fluttertoast.showToast(msg: 'Error durante el login');
+      Fluttertoast.showToast(msg: "Error ocurrido durante el login");
     }
   }
 
