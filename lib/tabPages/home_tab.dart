@@ -55,13 +55,15 @@ class _HomeTabPageState extends State<HomeTabPage> {
         CameraPosition(target: LatLngPosition, zoom: 14);
     newGoogleMapController!
         .animateCamera(CameraUpdate.newCameraPosition(cameraPosition));
-    String humanReadableAddress =
-        await AssistantMethods.searchAddressForGeographicsCoordinates(
-            userCurrentPosition!, context);
+    if (mounted) {
+      String humanReadableAddress =
+          await AssistantMethods.searchAddressForGeographicsCoordinates(
+              userCurrentPosition!, context);
 
-    print(humanReadableAddress);
+      print(humanReadableAddress);
 
-    intializeGeoFireListener();
+      intializeGeoFireListener();
+    }
   }
 
   @override
@@ -169,21 +171,25 @@ class _HomeTabPageState extends State<HomeTabPage> {
               rotation: 360);
           driverMarkerSet.add(marker);
         }
-        setState(() {
-          markerSet = driverMarkerSet;
-        });
+        if (mounted) {
+          setState(() {
+            markerSet = driverMarkerSet;
+          });
+        }
       });
     }
   }
 
   createActiveNearByDriverIconMaker() {
-    if (activeNearbyIcon == null) {
-      ImageConfiguration imageConfiguration =
-          createLocalImageConfiguration(context, size: const Size(2, 2));
-      BitmapDescriptor.fromAssetImage(imageConfiguration, 'images/car.png')
-          .then((value) {
-        activeNearbyIcon = value;
-      });
+    if (mounted) {
+      if (activeNearbyIcon == null) {
+        ImageConfiguration imageConfiguration =
+            createLocalImageConfiguration(context, size: const Size(2, 2));
+        BitmapDescriptor.fromAssetImage(imageConfiguration, 'images/car.png')
+            .then((value) {
+          activeNearbyIcon = value;
+        });
+      }
     }
   }
 }
