@@ -4,6 +4,8 @@ import 'package:cleanning_alert_neighbor/tabPages/home_tab.dart';
 import 'package:cleanning_alert_neighbor/tabPages/profile_tab.dart';
 import 'package:flutter/material.dart';
 
+import '../assistants/assistants_methods.dart';
+
 class MainScreen extends StatefulWidget {
   @override
   State<MainScreen> createState() => _MainScreenState();
@@ -65,42 +67,6 @@ class _MainScreenState extends State<MainScreen>
           )
         ],
       ),
-
-      /*
-      body: TabBarView(
-        physics: const NeverScrollableScrollPhysics(),
-        controller: tabController,
-        children: [HomeTabPage(), UbicacionTabPage(), ProfileTabPage()],
-      ),
-      bottomNavigationBar: BottomNavigationBar(
-        items: const [
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            label: 'Home',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.location_pin),
-            label: 'ubicación',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.person_add_alt_sharp),
-            label: 'Alert',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.person_add_alt_sharp),
-            label: 'Profile',
-          ),
-        ],
-        unselectedItemColor: Colors.white54,
-        selectedItemColor: Color.fromARGB(255, 81, 200, 127),
-        backgroundColor: Colors.black,
-        type: BottomNavigationBarType.fixed,
-        selectedLabelStyle: TextStyle(fontSize: 14),
-        showUnselectedLabels: true,
-        currentIndex: selectedIndex,
-        onTap: onItemClicked,
-      ),
-    );*/
       body: TabBarView(
         physics: const NeverScrollableScrollPhysics(),
         controller: tabController,

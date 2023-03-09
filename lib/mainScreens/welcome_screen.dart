@@ -1,6 +1,8 @@
 import 'package:cleanning_alert_neighbor/authentication/signup_screen.dart';
+import 'package:cleanning_alert_neighbor/splashScreen/splash_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:cleanning_alert_neighbor/authentication/login_screen.dart';
+import 'package:lottie/lottie.dart';
 
 class WelcomeScreen extends StatelessWidget {
   @override
@@ -22,12 +24,21 @@ class WelcomeScreen extends StatelessWidget {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Image.asset(
-                "images/basurero.png",
-                height: 200,
+              Center(
+                child: Lottie.network(
+                    'https://assets10.lottiefiles.com/packages/lf20_ZeihcYaIk0.json',
+                    width: 300,
+                    height: 500),
+              ),
+              const Text(
+                'Cleaning Alert Vecino App',
+                style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white,
+                    fontSize: 20),
               ),
               Container(
-                margin: EdgeInsets.only(top: 200),
+                margin: EdgeInsets.only(top: 130),
                 width: 200,
                 decoration: BoxDecoration(
                   color: Color.fromARGB(255, 37, 210, 126),
@@ -46,7 +57,7 @@ class WelcomeScreen extends StatelessWidget {
                       style: TextStyle(color: Colors.white, fontSize: 20)),
                   onPressed: () {
                     Navigator.push(context,
-                        MaterialPageRoute(builder: (_) => LoginScreen()));
+                        MaterialPageRoute(builder: (_) => MySplashScreen()));
                   },
                 ),
               ),

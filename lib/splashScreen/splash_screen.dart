@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:cleanning_alert_neighbor/authentication/login_screen.dart';
 import 'package:cleanning_alert_neighbor/global/global.dart';
 import 'package:cleanning_alert_neighbor/mainScreens/main_screens.dart';
+import 'package:lottie/lottie.dart';
 
 class MySplashScreen extends StatefulWidget {
   const MySplashScreen({Key? key}) : super(key: key);
@@ -21,7 +22,7 @@ class _MySplashScreenState extends State<MySplashScreen> {
             context, MaterialPageRoute(builder: (c) => MainScreen()));
       } else {
         Navigator.push(
-            context, MaterialPageRoute(builder: (c) => WelcomeScreen()));
+            context, MaterialPageRoute(builder: (c) => LoginScreen()));
       }
     });
   }
@@ -51,12 +52,15 @@ class _MySplashScreenState extends State<MySplashScreen> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Image.asset('images/basurero.png'),
+              Center(
+                child: Lottie.network(
+                    'https://assets8.lottiefiles.com/packages/lf20_jjoydpqg.json'),
+              ),
               const SizedBox(
                 height: 30,
               ),
               const Text(
-                'Cleaning Alert',
+                'Espere por favor....',
                 style: TextStyle(
                     fontSize: 24,
                     color: Colors.white,

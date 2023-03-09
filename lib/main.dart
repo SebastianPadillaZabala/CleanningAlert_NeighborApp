@@ -5,26 +5,27 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:cleanning_alert_neighbor/mainScreens/welcome_screen.dart';
 import 'package:cleanning_alert_neighbor/constants.dart';
+import 'package:provider/provider.dart';
+
+import 'infoHandler/app_info.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
 
-  runApp(
-    MyApp(
+  runApp(MyApp(
+    child: ChangeNotifierProvider(
+      create: (context) => AppInfo(),
       child: MaterialApp(
-        title: 'Neighbor App',
+        title: 'Nighbor App',
         theme: ThemeData(
-          primaryColor: kPrimaryColor,
-          scaffoldBackgroundColor: Colors.white,
+          primarySwatch: Colors.blue,
         ),
-
         home: WelcomeScreen(),
-        //     home: LoginScreen(),
         debugShowCheckedModeBanner: false,
       ),
     ),
-  );
+  ));
 }
 
 class MyApp extends StatefulWidget {

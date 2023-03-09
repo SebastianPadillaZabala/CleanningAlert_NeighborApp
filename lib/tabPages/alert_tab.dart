@@ -36,6 +36,12 @@ class _HomeTabPageState extends State<HomeTabPage> {
   BitmapDescriptor? activeNearbyIcon;
   List<ActiveNearbyAvailableDrivers> onlineNearByAvailableDriversList = [];
 
+//// Polilines
+  List<Polyline> myPolyline = [];
+
+
+  ///
+
   checkIfLocationPermissionAllowed() async {
     _locationPermission = await Geolocator.requestPermission();
 
@@ -69,6 +75,21 @@ class _HomeTabPageState extends State<HomeTabPage> {
     super.initState();
     // AssistantMethods.readCurrentOnlineUserInfo();
     checkIfLocationPermissionAllowed();
+
+
+    ///createPoliline
+    createPloyline(){
+      myPolyline.add(
+        Polyline(polylineId: PolylineId('1'),
+        color: Colors.blue,
+        width: 3,
+        points: [
+          LatLng(29.990000, 31.149000),
+        ]
+        )
+      )
+    }
+    //
   }
 
   @override

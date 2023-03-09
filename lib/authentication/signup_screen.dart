@@ -107,7 +107,7 @@ class _SignupScreenState extends State<SignupScreen> {
                       TextField(
                         controller: nameTextEditingController,
                         decoration: const InputDecoration(
-                          hintText: "name",
+                          hintText: "Nombre",
                         ),
                       ),
                       const SizedBox(
@@ -116,7 +116,7 @@ class _SignupScreenState extends State<SignupScreen> {
                       TextField(
                         controller: emailTextEditingController,
                         decoration: const InputDecoration(
-                          hintText: "username@correo.com",
+                          hintText: "Email",
                         ),
                       ),
                       const SizedBox(
@@ -124,9 +124,7 @@ class _SignupScreenState extends State<SignupScreen> {
                       ),
                       TextField(
                         controller: phoneTextEditingController,
-                        decoration: const InputDecoration(
-                          hintText: "#########",
-                        ),
+                        decoration: const InputDecoration(hintText: 'Celular'),
                       ),
                       const SizedBox(
                         height: 10,
@@ -135,7 +133,7 @@ class _SignupScreenState extends State<SignupScreen> {
                         controller: passwordTextEditingController,
                         obscureText: true,
                         decoration: const InputDecoration(
-                          hintText: "password",
+                          hintText: "Password",
                         ),
                       ),
                       const SizedBox(
